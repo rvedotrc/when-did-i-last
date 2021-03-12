@@ -19,8 +19,6 @@ export default () => {
 
     const signOut = () => firebase.auth().signOut();
 
-    console.log({ currentUser });
-
     return <div>
         {/*<h2>currentUser</h2>*/}
         {/*<pre>{JSON.stringify(currentUser, null, 2)}</pre>*/}

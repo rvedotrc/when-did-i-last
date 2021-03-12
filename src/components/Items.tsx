@@ -15,10 +15,8 @@ export default (props: Props) => {
 
     const itemsRef = firebase.database().ref(`/users/${props.user.uid}/items`);
 
-    const listener = (snapshot: firebase.database.DataSnapshot) => {
-        console.log({ snapshot });
-        setItems(parseItems(snapshot.ref, snapshot.val()));
-    };
+    const listener = (snapshot: firebase.database.DataSnapshot) =>
+        setItems(parseItems(snapshot.ref, snapshot.val()))
 
     useEffect(
         () => {
