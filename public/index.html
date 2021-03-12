@@ -1,9 +1,35 @@
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="/__/firebase/8.2.9/firebase-app.js"></script>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>When Did I Last...?</title>
 
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="/__/firebase/8.2.9/firebase-analytics.js"></script>
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="/__/firebase/8.2.9/firebase-app.js"></script>
 
-<!-- Initialize Firebase -->
-<script src="/__/firebase/init.js"></script>
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+             https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="/__/firebase/8.2.9/firebase-auth.js"></script>
+        <script src="/__/firebase/8.2.9/firebase-database.js"></script>
+        <script src="/__/firebase/8.2.9/firebase-analytics.js"></script>
+
+        <!-- Initialize Firebase -->
+        <script src="/__/firebase/init.js"></script>
+
+<!--            &lt;!&ndash; update the version number as needed &ndash;&gt;-->
+<!--            <script defer src="/__/firebase/7.14.5/firebase-app.js"></script>-->
+<!--            &lt;!&ndash; include only the Firebase features as you need &ndash;&gt;-->
+<!--            <script defer src="/__/firebase/7.14.5/firebase-auth.js"></script>-->
+<!--            <script defer src="/__/firebase/7.14.5/firebase-database.js"></script>-->
+<!--            &lt;!&ndash; initialize the SDK after all desired features are loaded &ndash;&gt;-->
+<!--            <script defer src="/__/firebase/init.js"></script>-->
+
+    </head>
+    <body>
+        <div id="react_container"></div>
+        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+        <script src="dist/main.js"></script>
+    </body>
+</html>
