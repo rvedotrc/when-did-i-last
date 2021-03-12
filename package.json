@@ -40,6 +40,7 @@
     "url": "rvedotrc.github.com:rvedotrc/when-did-i-last"
   },
   "scripts": {
+    "ci": "echo 'This is a no-op. Sorry.'",
     "start": "firebase serve --port 5200",
     "build": "webpack --mode development",
     "lint": "npx eslint --ext .jsx,.js,.tsx,.ts --max-warnings 0 src",
