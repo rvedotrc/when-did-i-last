@@ -20,11 +20,11 @@ export default () => {
     const signOut = () => firebase.auth().signOut();
 
     return <div>
-        {/*<h2>currentUser</h2>*/}
-        {/*<pre>{JSON.stringify(currentUser, null, 2)}</pre>*/}
-
         {!currentUser && <>
             <h1>Hello!</h1>
+
+            <p><i>When Did I Last...?</i> uses Google to store your list of tasks.</p>
+            <p>Sign in with Google to get started.</p>
 
             <button onClick={signInWithGoogle}>
                 Sign in with Google
