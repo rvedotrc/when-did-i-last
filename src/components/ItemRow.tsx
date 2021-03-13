@@ -67,6 +67,9 @@ export default (props: Props) => {
                     <input type={"text"}
                            value={editName}
                            onChange={e => setEditName(e.target.value)}
+                           onKeyDown={e => {
+                               if (e.key === 'Escape') setIsEditing(false);
+                           }}
                            autoFocus={true}
                     />
                     <input type={"submit"} value={"✅"} title={"Save"}/>
