@@ -18,6 +18,11 @@ const describeAge = (secondsAgo: number): string => {
     return `${daysAgo} days ago`;
 };
 
+const guardedDoItem = (item: Item) => {
+    const ok = window.confirm(`Mark '${item.name}' as just done?`);
+    if (ok) doItem(item);
+};
+
 const guardedDeleteItem = (item: Item) => {
     const ok = window.confirm(`Delete '${item.name}'?`);
     if (ok) deleteItem(item);
@@ -45,7 +50,14 @@ export default (props: Props) => {
 
     return <tr key={item.id}>
         <td>
-            {!isEditing && <>{item.name}</>}
+            {!isEditing && <>
+                <button
+                    onClick={() => guardedDoItem(item)}
+                    title={"Mark item as just done"}
+                >
+                    {item.name}
+                </button>
+            </>}
 
             {isEditing && <>
                 <form
@@ -72,9 +84,6 @@ export default (props: Props) => {
         </td>
 
         <td>
-            <button onClick={() => doItem(item)} title={"Mark item as just done"}>
-                💪🏻
-            </button>
             {props.editMode && <>
                 {' '}
                 <button onClick={startEdit} title={"Edit item"}>
