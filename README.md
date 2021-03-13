@@ -3,7 +3,7 @@
 Do you constantly forget to do things that you know are important?
 Like, you know that it's a good thing if you talk to your friend
 once in a while, but before you know it, suddenly it's been 6 months,
-and you...just completely lost track of how long it had been?
+and you... just completely lost track of how long it had been?
 
 Or maybe the same thing but for chores: change the bed. Vacuum. Empty
 the fridge.

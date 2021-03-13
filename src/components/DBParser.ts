@@ -32,6 +32,8 @@ const serialiseItem = (item: UnsavedItem): any => ({
 });
 
 export const parseItems = (itemsRef: firebase.database.Reference, data: any): Item[] => {
+    if (!data) return [];
+
     const items: Item[] = [];
 
     Object.keys(data).forEach(id => {

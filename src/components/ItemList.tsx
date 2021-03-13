@@ -20,8 +20,9 @@ export default (props: Props) => {
     today.setSeconds(0);
     today.setMilliseconds(0);
 
+    if (props.items.length === 0) return <p><em>No items yet</em></p>;
+
     return <div>
-        <h2>Items</h2>
         <table>
             <thead>
                 <tr>

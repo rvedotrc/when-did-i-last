@@ -24,7 +24,7 @@ export default (props: Props) => {
     };
 
     return <div>
-        <h3>Add another...</h3>
+        <h3>Add an item</h3>
         <form onSubmit={onSubmit}>
             <p>
                 <input type={"text"}
