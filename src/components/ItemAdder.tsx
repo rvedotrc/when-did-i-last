@@ -17,13 +17,10 @@ export default (props: Props) => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        if (!validName) return true;
+        if (!validName) return;
 
         addItem(props.itemsRef, { name: addName, lastTime: undefined })
             .then(() => setAddName(''));
-
-        return true;
     };
 
     return <div>
