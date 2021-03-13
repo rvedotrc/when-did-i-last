@@ -15,11 +15,20 @@ export default (props: Props) => {
 
     return <div>
         <h2>Items</h2>
-        <ol>
-            {props.items.map((item, index) =>
-                <ItemRow item={item} now={now} key={index}/>
-            )}
-        </ol>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Last done</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {props.items.map((item, index) =>
+                    <ItemRow item={item} now={now} key={index}/>
+                )}
+            </tbody>
+        </table>
     </div>;
 };
 

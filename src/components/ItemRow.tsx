@@ -42,42 +42,46 @@ export default (props: Props) => {
         renameItem(item, editName).then(() => setIsEditing(false));
     }
 
-    return <li key={item.id}>
-        {!isEditing && <>
-            {item.name},{' '}
-        </>}
-        {isEditing && <>
-            <form
-                onSubmit={saveName}
-                onReset={() => setIsEditing(false)}
-            >
-                <input type={"text"}
-                       value={editName}
-                       onChange={e => setEditName(e.target.value)}
-                       autoFocus={true}
-                />
-                <input type={"submit"}/>
-                <input type={"reset"}/>
-            </form>
-        </>}
+    return <tr key={item.id}>
+        <td>
+            {!isEditing && <>{item.name}</>}
 
-        last done:{' '}
-        {!item.lastTime && 'never'}
-        {item.lastTime && <span title={new Date(item.lastTime).toString()}>
-                    {describeAge((props.now - item.lastTime) / 1000)}
-                </span>}
-        {' '}
+            {isEditing && <>
+                <form
+                    onSubmit={saveName}
+                    onReset={() => setIsEditing(false)}
+                >
+                    <input type={"text"}
+                           value={editName}
+                           onChange={e => setEditName(e.target.value)}
+                           autoFocus={true}
+                    />
+                    <input type={"submit"} value={"✅"} title={"Save"}/>
+                    <input type={"reset"} value={"❌"} title={"Discard"}/>
+                </form>
+            </>}
+        </td>
 
-        <button onClick={() => doItem(item)}>
-            I just did it!
-        </button>
+        <td>
+            {!item.lastTime && 'never'}
 
-        <button onClick={startEdit}>
-            Edit
-        </button>
+            {item.lastTime && <span title={new Date(item.lastTime).toString()}>
+                        {describeAge((props.now - item.lastTime) / 1000)}
+                    </span>}
+        </td>
 
-        <button onClick={() => guardedDeleteItem(item)}>
-            Delete
-        </button>
-    </li>;
+        <td>
+            <button onClick={() => doItem(item)} title={"Mark item as just done"}>
+                💪🏻
+            </button>
+            {' '}
+            <button onClick={startEdit} title={"Edit item"}>
+                🖊
+            </button>
+            {' '}
+            <button onClick={() => guardedDeleteItem(item)} title={"Delete item"}>
+                🗑
+            </button>
+        </td>
+    </tr>;
 };

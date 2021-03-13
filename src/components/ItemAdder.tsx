@@ -32,7 +32,7 @@ export default (props: Props) => {
                        onChange={e => setAddName(e.target.value)}
                 />
                 <input type={"submit"}
-                       disabled={!validName}/>
+                       disabled={!validName} value={"Add"}/>
             </p>
         </form>
     </div>;
