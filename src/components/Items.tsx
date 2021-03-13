@@ -12,6 +12,7 @@ type Props = {
 
 export default (props: Props) => {
     const [items, setItems] = useState<Item[]>();
+    const [editMode, setEditMode] = useState<boolean>(false);
 
     const itemsRef = firebase.database().ref(`/users/${props.user.uid}/items`);
 
@@ -29,8 +30,12 @@ export default (props: Props) => {
     if (!items) return null;
 
     return <div>
-        <ItemList user={props.user} items={items}/>
+        <ItemList user={props.user} items={items} editMode={editMode}/>
 
-        <ItemAdder user={props.user} itemsRef={itemsRef}/>
+        <button onClick={() => setEditMode(!editMode)}
+                title={"Edit mode"}
+                >⚙️</button>
+
+        {editMode && <ItemAdder user={props.user} itemsRef={itemsRef}/>}
     </div>;
 };

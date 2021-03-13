@@ -7,6 +7,7 @@ declare const firebase: typeof import('firebase');
 type Props = {
     item: Item;
     now: number;
+    editMode: boolean;
 }
 
 const describeAge = (secondsAgo: number): string => {
@@ -74,14 +75,16 @@ export default (props: Props) => {
             <button onClick={() => doItem(item)} title={"Mark item as just done"}>
                 💪🏻
             </button>
-            {' '}
-            <button onClick={startEdit} title={"Edit item"}>
-                🖊
-            </button>
-            {' '}
-            <button onClick={() => guardedDeleteItem(item)} title={"Delete item"}>
-                🗑
-            </button>
+            {props.editMode && <>
+                {' '}
+                <button onClick={startEdit} title={"Edit item"}>
+                    🖊
+                </button>
+                {' '}
+                <button onClick={() => guardedDeleteItem(item)} title={"Delete item"}>
+                    🗑
+                </button>
+            </>}
         </td>
     </tr>;
 };
