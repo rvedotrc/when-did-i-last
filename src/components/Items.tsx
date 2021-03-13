@@ -34,7 +34,7 @@ export default (props: Props) => {
 
         <button onClick={() => setEditMode(!editMode)}
                 title={"Edit mode"}
-                >⚙️</button>
+                >{editMode ? "🔓" : "🔒"}️</button>
 
         {(editMode || (items.length === 0)) && <ItemAdder user={props.user} itemsRef={itemsRef}/>}
     </div>;
