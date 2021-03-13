@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {deleteItem, doItem, Item} from "./DBParser";
+import {deleteItem, doItem, Item, renameItem} from "./DBParser";
+import {useState} from "react";
 
 declare const firebase: typeof import('firebase');
 
@@ -24,8 +25,41 @@ const guardedDeleteItem = (item: Item) => {
 export default (props: Props) => {
     const { item } = props;
 
+    const [isEditing, setIsEditing] = useState<boolean>(false);
+    const [editName, setEditName] = useState<string>("");
+
+    const startEdit = () => {
+        setEditName(item.name);
+        setIsEditing(true);
+    };
+
+    const validName = editName.match(/\S/);
+
+    const saveName = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (!validName) return true;
+
+        renameItem(item, editName).then(() => setIsEditing(false));
+    }
+
     return <li key={item.id}>
-        {item.name},
+        {!isEditing && <>
+            {item.name},{' '}
+        </>}
+        {isEditing && <>
+            <form
+                onSubmit={saveName}
+                onReset={() => setIsEditing(false)}
+            >
+                <input type={"text"}
+                       value={editName}
+                       onChange={e => setEditName(e.target.value)}
+                       autoFocus={true}
+                />
+                <input type={"submit"}/>
+                <input type={"reset"}/>
+            </form>
+        </>}
 
         last done:{' '}
         {!item.lastTime && 'never'}
@@ -36,6 +70,10 @@ export default (props: Props) => {
 
         <button onClick={() => doItem(item)}>
             I just did it!
+        </button>
+
+        <button onClick={startEdit}>
+            Edit
         </button>
 
         <button onClick={() => guardedDeleteItem(item)}>
