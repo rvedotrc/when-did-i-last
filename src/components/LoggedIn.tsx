@@ -11,11 +11,13 @@ type Props = {
 
 export default (props: Props) => {
     return <>
-        <p>Signed in as: {props.user.displayName}</p>
-
-        <button onClick={signOut}>
-            Sign out
-        </button>
+        <p>
+            Signed in as: {props.user.displayName}
+            {' '}
+            <button onClick={signOut}>
+                Sign out
+            </button>
+        </p>
 
         <Items user={props.user}/>
     </>;
