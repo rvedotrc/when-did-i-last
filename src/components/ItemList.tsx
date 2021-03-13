@@ -14,6 +14,12 @@ export default (props: Props) => {
     // Auto-re-render every hour or so?
     const now = new Date().getTime();
 
+    const today = new Date(now);
+    today.setHours(0);
+    today.setMinutes(0);
+    today.setSeconds(0);
+    today.setMilliseconds(0);
+
     return <div>
         <h2>Items</h2>
         <table>
@@ -26,7 +32,7 @@ export default (props: Props) => {
             </thead>
             <tbody>
                 {props.items.map((item, index) =>
-                    <ItemRow item={item} now={now} editMode={props.editMode} key={index}/>
+                    <ItemRow item={item} today={today} editMode={props.editMode} key={index}/>
                 )}
             </tbody>
         </table>

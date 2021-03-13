@@ -6,15 +6,22 @@ declare const firebase: typeof import('firebase');
 
 type Props = {
     item: Item;
-    now: number;
+    today: Date;
     editMode: boolean;
 }
 
-const describeAge = (secondsAgo: number): string => {
+const describeWhen = (today: Date, lastTime: number): string => {
     // Always in days, for now
-    const daysAgo = Math.floor(secondsAgo / 86400);
-    if (daysAgo <= 1) return "less than a day ago";
-    if (daysAgo === 1) return "a day ago";
+
+    const dayDone = new Date(lastTime);
+    dayDone.setHours(0);
+    dayDone.setMinutes(0);
+    dayDone.setSeconds(0);
+    dayDone.setMilliseconds(0);
+
+    const daysAgo = (today.getTime() - dayDone.getTime()) / 86400 / 1000;
+    if (daysAgo <= 1) return "today";
+    if (daysAgo === 1) return "yesterday";
     return `${daysAgo} days ago`;
 };
 
@@ -79,10 +86,10 @@ export default (props: Props) => {
         </td>
 
         <td>
-            {!item.lastTime && 'never'}
+            {!item.lastTime && '?'}
 
             {item.lastTime && <span title={new Date(item.lastTime).toString()}>
-                        {describeAge((props.now - item.lastTime) / 1000)}
+                        {describeWhen(props.today, item.lastTime)}
                     </span>}
         </td>
 
