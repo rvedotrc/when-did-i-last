@@ -44,7 +44,7 @@ export default (props: Props) => {
             </thead>
             <tbody>
                 {props.items.map((item, index) =>
-                    <ItemRow item={item} today={today} editMode={props.editMode} key={index}/>
+                    <ItemRow item={item} now={now} today={today} editMode={props.editMode} key={index}/>
                 )}
             </tbody>
         </table>

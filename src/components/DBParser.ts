@@ -86,9 +86,8 @@ export const doItem = (item: Item): Promise<void> => {
     return item.ref.set(serialiseItem(newItem));
 };
 
-export const renameItem = (item: Item, name: string): Promise<void> => {
-    const newItem: Item = { ...item, name };
-    return item.ref.set(serialiseItem(newItem));
+export const saveItem = (item: Item): Promise<void> => {
+    return item.ref.set(serialiseItem(item));
 };
 
 export const deleteItem = (item: Item): Promise<void> =>

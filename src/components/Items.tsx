@@ -36,6 +36,6 @@ export default (props: Props) => {
                 title={"Edit mode"}
                 >{editMode ? "🔓" : "🔒"}️</button>
 
-        {(editMode || (items.length === 0)) && <ItemAdder user={props.user} itemsRef={itemsRef}/>}
+        {(editMode || (items.length === 0)) && <ItemAdder itemsRef={itemsRef}/>}
     </div>;
 };

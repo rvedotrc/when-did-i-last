@@ -1,12 +1,15 @@
 import * as React from 'react';
 import {useState} from "react";
-import {addItem} from "./DBParser";
+import {addItem, Item, saveItem} from "./DBParser";
 
 declare const firebase: typeof import('firebase');
 
 type Props = {
-    user: firebase.User;
     itemsRef: firebase.database.Reference;
+    onDone?: () => void;
+} | {
+    item: Item;
+    onDone?: () => void;
 }
 
 const parseInterval = (t: string): {
@@ -24,9 +27,11 @@ const parseInterval = (t: string): {
 };
 
 export default (props: Props) => {
-    const [addName, setAddName] = useState<string>("");
-    const [addLowDays, setAddLowDays] = useState<string>("");
-    const [addHighDays, setAddHighDays] = useState<string>("");
+    const item = ("item" in props) ? props.item : undefined;
+
+    const [addName, setAddName] = useState<string>(item ? item.name : "");
+    const [addLowDays, setAddLowDays] = useState<string>(item?.lowInterval ? item.lowInterval.count.toString() : "");
+    const [addHighDays, setAddHighDays] = useState<string>(item?.highInterval ? item.highInterval.count.toString() : "");
 
     const low = parseInterval(addLowDays);
     const high = parseInterval(addHighDays);
@@ -42,13 +47,31 @@ export default (props: Props) => {
         e.preventDefault();
         if (!validForm) return;
 
-        addItem(props.itemsRef, { name: addName, lastTime: undefined })
-            .then(() => setAddName(''));
+        // (Type-narrowing by hand)
+        if (low === "error" || high === "error") return;
+
+        if ("itemsRef" in props) {
+            addItem(props.itemsRef, {
+                name: addName,
+                lowInterval: low,
+                highInterval: high,
+                lastTime: undefined,
+            })
+                .then(() => setAddName(''))
+                .then(props.onDone);
+        } else {
+            saveItem({
+                ...props.item,
+                name: addName,
+                lowInterval: low,
+                highInterval: high,
+            }).then(props.onDone);
+        }
     };
 
     return <div>
-        <h3>Add an item</h3>
-        <form onSubmit={onSubmit}>
+        <h3>{item ? "Edit an item" : "Add an item"}</h3>
+        <form onSubmit={onSubmit} onReset={props.onDone}>
             <p>
                 <input type={"text"}
                        value={addName}
@@ -59,15 +82,21 @@ export default (props: Props) => {
                 Target range:{' '}
                 <input type={"text"} value={addLowDays}
                        onChange={e => setAddLowDays(e.target.value)}
+                       size={3}
                        />
                 {' '}-{' '}
                 <input type={"text"} value={addHighDays}
                        onChange={e => setAddHighDays(e.target.value)}
+                       size={3}
                 /> days
             </p>
             <p>
                 <input type={"submit"}
-                       disabled={!validForm} value={"Add"}/>
+                       disabled={!validForm} value={item ? "Update" : "Add"}/>
+                {props.onDone && (
+                    <input type={"reset"}
+                           value={"Cancel"}/>
+                )}
             </p>
         </form>
     </div>;

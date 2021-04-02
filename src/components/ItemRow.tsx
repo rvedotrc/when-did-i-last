@@ -1,11 +1,13 @@
 import * as React from 'react';
-import {deleteItem, doItem, Item, renameItem} from "./DBParser";
-import {useState} from "react";
+import {deleteItem, doItem, Item, saveItem} from "./DBParser";
+import {CSSProperties, useState} from "react";
+import ItemAdder from "./ItemAdder";
 
 declare const firebase: typeof import('firebase');
 
 type Props = {
     item: Item;
+    now: number;
     today: Date;
     editMode: boolean;
 }
@@ -64,7 +66,49 @@ export default (props: Props) => {
         e.preventDefault();
         if (!validName) return true;
 
-        renameItem(item, editName).then(() => setIsEditing(false));
+        saveItem({
+            ...item,
+            name: editName,
+        }).then(() => setIsEditing(false));
+    }
+
+    let cssProps: CSSProperties | undefined;
+
+    if (item.lastTime) {
+        const daysAgo = (props.now - item.lastTime) / 86400 / 1000;
+
+        if (item.lowInterval && item.highInterval) {
+            if (daysAgo < item.lowInterval.count) {
+                cssProps = { backgroundColor: '#0f0' };
+            } else if (daysAgo > item.highInterval.count) {
+                cssProps = { backgroundColor: '#f00' };
+            } else {
+                const coefficient = (daysAgo - item.lowInterval.count) / (item.highInterval.count - item.lowInterval.count);
+                cssProps = { backgroundColor: `rgb(${Math.round(100 * coefficient)}%, ${Math.round(100 * (1 - coefficient))}%, 0%)` };
+            }
+        } else if (item.lowInterval && !item.highInterval) {
+            // Do no more often than X
+            if (daysAgo < item.lowInterval.count) {
+                cssProps = {backgroundColor: '#999'};
+            }
+        } else if (!item.lowInterval && item.highInterval) {
+            // Do no less often than X
+            if (daysAgo > item.highInterval.count) {
+                cssProps = {backgroundColor: '#f00'};
+            } else {
+                cssProps = {backgroundColor: '#0f0'};
+            }
+        }
+    }
+
+    console.log({ name: item.name, cssProps });
+
+    if (isEditing) {
+        return <tr key={item.id}>
+            <td colSpan={3}>
+                <ItemAdder item={item} onDone={() => setIsEditing(false)}/>
+            </td>
+        </tr>;
     }
 
     return <tr key={item.id}>
@@ -93,11 +137,13 @@ export default (props: Props) => {
                     />
                     <input type={"submit"} value={"✅"} title={"Save"}/>
                     <input type={"reset"} value={"❌"} title={"Discard"}/>
+                    <br/>
+
                 </form>
             </>}
         </td>
 
-        <td>
+        <td style={cssProps}>
             {!item.lastTime && '?'}
 
             {item.lastTime && <span title={new Date(item.lastTime).toString()}>
