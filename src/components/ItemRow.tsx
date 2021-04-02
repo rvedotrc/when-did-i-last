@@ -34,7 +34,7 @@ const describeWhen = (today: Date, lastTime: number): string => {
 
     if (daysAgo < 1) return "today";
     if (daysAgo === 1) return "yesterday";
-    return `${daysAgo} days ago`;
+    return `${Math.round(daysAgo)} days ago`;
 };
 
 const guardedDoItem = (item: Item) => {
