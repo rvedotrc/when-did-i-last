@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {deleteItem, doItem, Item, saveItem} from "./DBParser";
+import {deleteItem, doItem, Item} from "./DBParser";
 import {CSSProperties, useState} from "react";
 import ItemAdder from "./ItemAdder";
 
@@ -53,24 +53,6 @@ export default (props: Props) => {
     const { item } = props;
 
     const [isEditing, setIsEditing] = useState<boolean>(false);
-    const [editName, setEditName] = useState<string>("");
-
-    const startEdit = () => {
-        setEditName(item.name);
-        setIsEditing(true);
-    };
-
-    const validName = editName.match(/\S/);
-
-    const saveName = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if (!validName) return true;
-
-        saveItem({
-            ...item,
-            name: editName,
-        }).then(() => setIsEditing(false));
-    }
 
     let cssProps: CSSProperties | undefined;
 
@@ -113,34 +95,12 @@ export default (props: Props) => {
 
     return <tr key={item.id}>
         <td>
-            {!isEditing && <>
-                <button
-                    onClick={() => guardedDoItem(item)}
-                    title={"Mark item as just done"}
-                >
-                    {item.name}
-                </button>
-            </>}
-
-            {isEditing && <>
-                <form
-                    onSubmit={saveName}
-                    onReset={() => setIsEditing(false)}
-                >
-                    <input type={"text"}
-                           value={editName}
-                           onChange={e => setEditName(e.target.value)}
-                           onKeyDown={e => {
-                               if (e.key === 'Escape') setIsEditing(false);
-                           }}
-                           autoFocus={true}
-                    />
-                    <input type={"submit"} value={"✅"} title={"Save"}/>
-                    <input type={"reset"} value={"❌"} title={"Discard"}/>
-                    <br/>
-
-                </form>
-            </>}
+            <button
+                onClick={() => guardedDoItem(item)}
+                title={"Mark item as just done"}
+            >
+                {item.name}
+            </button>
         </td>
 
         <td style={cssProps}>
@@ -154,7 +114,7 @@ export default (props: Props) => {
         <td>
             {props.editMode && <>
                 {' '}
-                <button onClick={startEdit} title={"Edit item"}>
+                <button onClick={() => setIsEditing(true)} title={"Edit item"}>
                     🖊
                 </button>
                 {' '}
