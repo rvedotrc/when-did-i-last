@@ -20,6 +20,17 @@ export default (props: Props) => {
     today.setSeconds(0);
     today.setMilliseconds(0);
 
+    console.log({
+        now: {
+            n: now,
+            d: new Date(now),
+        },
+        today: {
+            n: today.getTime(),
+            d: today,
+        },
+    });
+
     if (props.items.length === 0) return <p><em>No items yet</em></p>;
 
     return <div>

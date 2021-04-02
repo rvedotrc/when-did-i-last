@@ -20,6 +20,18 @@ const describeWhen = (today: Date, lastTime: number): string => {
     dayDone.setMilliseconds(0);
 
     const daysAgo = (today.getTime() - dayDone.getTime()) / 86400 / 1000;
+    console.log({
+        lastTime: {
+            n: lastTime,
+            d: new Date(lastTime),
+        },
+        dayDone: {
+            n: dayDone.getTime(),
+            d: dayDone,
+        },
+        daysAgo,
+    });
+
     if (daysAgo < 1) return "today";
     if (daysAgo === 1) return "yesterday";
     return `${daysAgo} days ago`;

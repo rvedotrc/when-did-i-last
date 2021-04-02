@@ -4,7 +4,15 @@ export type Item = {
     id: string;
     ref: firebase.database.Reference;
     name: string;
-    lastTime: number | undefined;
+    lastTime?: number;
+    lowInterval?: {
+        count: number;
+        units: "d";
+    };
+    highInterval?: {
+        count: number;
+        units: "d";
+    };
 }
 
 export type UnsavedItem = Omit<Item, "id" | "ref">
@@ -23,12 +31,31 @@ const deserialiseItem = (itemRef: firebase.database.Reference, id: string, v: an
         ref: itemRef,
         name,
         lastTime: lastTime || undefined,
+        lowInterval: deserialiseInterval(v.lowInterval),
+        highInterval: deserialiseInterval(v.highInterval),
     };
+};
+
+const deserialiseInterval = (data: any): {
+    count: number;
+    units: "d";
+} | undefined => {
+    if (!data) return;
+
+    const count = data.count;
+    if (typeof count !== 'number') return;
+
+    const units = data.units;
+    if (units !== 'd') return;
+
+    return { count, units };
 };
 
 const serialiseItem = (item: UnsavedItem): any => ({
     name: item.name,
     lastTime: item.lastTime || null,
+    lowInterval: item.lowInterval || null,
+    highInterval: item.highInterval || null,
 });
 
 export const parseItems = (itemsRef: firebase.database.Reference, data: any): Item[] => {
