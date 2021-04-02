@@ -3,6 +3,8 @@ import {deleteItem, doItem, Item} from "./DBParser";
 import {CSSProperties, useState} from "react";
 import ItemAdder from "./ItemAdder";
 
+const styles = require('./ItemRow.css');
+
 declare const firebase: typeof import('firebase');
 
 type Props = {
@@ -83,8 +85,6 @@ export default (props: Props) => {
         }
     }
 
-    console.log({ name: item.name, cssProps });
-
     if (isEditing) {
         return <tr key={item.id}>
             <td colSpan={3}>
@@ -103,7 +103,7 @@ export default (props: Props) => {
             </button>
         </td>
 
-        <td style={cssProps}>
+        <td style={cssProps} className={styles.default.age}>
             {!item.lastTime && '?'}
 
             {item.lastTime && <span title={new Date(item.lastTime).toString()}>
