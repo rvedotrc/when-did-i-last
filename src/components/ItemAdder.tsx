@@ -40,7 +40,7 @@ export default (props: Props) => {
         addName.match(/\S/)
         && low !== "error"
         && high !== "error"
-        && ((low === undefined) === (high === undefined))
+        && ((low?.count ?? 0) <= (high?.count ?? Infinity))
     );
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
