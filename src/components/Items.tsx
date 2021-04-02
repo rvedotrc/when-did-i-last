@@ -8,11 +8,11 @@ declare const firebase: typeof import('firebase');
 
 type Props = {
     user: firebase.User;
+    editMode: boolean;
 }
 
 export default (props: Props) => {
     const [items, setItems] = useState<Item[]>();
-    const [editMode, setEditMode] = useState<boolean>(false);
 
     const itemsRef = firebase.database().ref(`/users/${props.user.uid}/items`);
 
@@ -30,12 +30,8 @@ export default (props: Props) => {
     if (!items) return null;
 
     return <div>
-        <ItemList user={props.user} items={items} editMode={editMode}/>
+        <ItemList items={items} editMode={props.editMode}/>
 
-        <button onClick={() => setEditMode(!editMode)}
-                title={"Edit mode"}
-                >{editMode ? "🔓" : "🔒"}️</button>
-
-        {(editMode || (items.length === 0)) && <ItemAdder itemsRef={itemsRef}/>}
+        {(props.editMode || (items.length === 0)) && <ItemAdder itemsRef={itemsRef}/>}
     </div>;
 };

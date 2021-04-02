@@ -5,7 +5,6 @@ import ItemRow from "./ItemRow";
 declare const firebase: typeof import('firebase');
 
 type Props = {
-    user: firebase.User;
     items: Item[];
     editMode: boolean;
 }
