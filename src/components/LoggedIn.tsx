@@ -1,6 +1,8 @@
 import * as React from 'react';
-import Items from "./Items";
 import {useState} from "react";
+import ItemsProvider from "./ItemsProvider";
+import Edit from "./edit";
+import Main from "./main/ItemList";
 
 declare const firebase: typeof import('firebase');
 
@@ -26,6 +28,12 @@ export default (props: Props) => {
             >{editMode ? "🔓" : "🔒"}️</button>
         </p>
 
-        <Items user={props.user} editMode={editMode}/>
+        <ItemsProvider user={props.user} r={(inner) =>
+            <>
+                {!inner.items && <p>loading...</p>}
+                {inner.items && editMode && <Edit itemsRef={inner.itemsRef} items={inner.items}/>}
+                {inner.items && !editMode && <Main items={inner.items} editMode={false}/>}
+            </>
+        }/>
     </>;
 };
