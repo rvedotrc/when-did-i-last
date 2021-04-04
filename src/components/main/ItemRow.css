@@ -1,4 +1,25 @@
-.age {
-    padding: 0.3em;
+.item {
+    margin: 0.3em;
     border-radius: 0.3em;
+    border-style: none;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    padding: 0.4em;
+}
+
+/*.item:hover {*/
+/*    border-style: outset;*/
+/*}*/
+
+/*.item:active {*/
+/*    border-style: inset;*/
+/*}*/
+
+.name {}
+
+.age {
+    margin-left: 2em;
 }

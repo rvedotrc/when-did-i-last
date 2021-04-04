@@ -1,7 +1,6 @@
 import * as React from 'react';
-import {deleteItem, doItem, Item} from "../DBParser";
-import {CSSProperties, useState} from "react";
-import ItemAdder from "../edit/ItemAdder";
+import {doItem, Item} from "../DBParser";
+import {CSSProperties} from "react";
 
 const styles = require('./ItemRow.css');
 
@@ -45,11 +44,6 @@ const guardedDoItem = (item: Item) => {
     if (ok) doItem(item);
 };
 
-const guardedDeleteItem = (item: Item) => {
-    const ok = window.confirm(`Delete '${item.name}'?`);
-    if (ok) deleteItem(item);
-};
-
 export default (props: Props) => {
     const { item } = props;
 
@@ -82,22 +76,23 @@ export default (props: Props) => {
         }
     }
 
-    return <tr key={item.id}>
-        <td>
-            <button
-                onClick={() => guardedDoItem(item)}
-                title={"Mark item as just done"}
-            >
-                {item.name}
-            </button>
-        </td>
+    return <button
+        onClick={() => guardedDoItem(item)}
+        title={"Mark item as just done"}
+        key={item.id}
+        style={cssProps}
+        className={styles.default.item}
+    >
+        <div className={styles.default.name}>
+            {item.name}
+        </div>
 
-        <td style={cssProps} className={styles.default.age}>
+        <div className={styles.default.age}>
             {!item.lastTime && '?'}
 
             {item.lastTime && <span title={new Date(item.lastTime).toString()}>
                         {describeWhen(props.today, item.lastTime)}
                     </span>}
-        </td>
-    </tr>;
+        </div>
+    </button>;
 };

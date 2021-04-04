@@ -2,6 +2,8 @@ import * as React from "react";
 import {Item} from "../DBParser";
 import ItemRow from "./ItemRow";
 
+const styles = require('./ItemList.css');
+
 declare const firebase: typeof import('firebase');
 
 type Props = {
@@ -31,20 +33,10 @@ export default (props: Props) => {
 
     if (props.items.length === 0) return <p><em>No items yet</em></p>;
 
-    return <div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Last done</th>
-                </tr>
-            </thead>
-            <tbody>
-                {props.items.map((item, index) =>
-                    <ItemRow item={item} now={now} today={today} key={index}/>
-                )}
-            </tbody>
-        </table>
+    return <div className={styles.default.list}>
+         {props.items.map((item, index) =>
+            <ItemRow item={item} now={now} today={today} key={index}/>
+        )}
     </div>;
 };
 
