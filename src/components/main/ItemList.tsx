@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Item} from "./DBParser";
+import {Item} from "../DBParser";
 import ItemRow from "./ItemRow";
 
 declare const firebase: typeof import('firebase');

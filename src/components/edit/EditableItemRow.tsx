@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {deleteItem, doItem, Item} from "./DBParser";
+import {deleteItem, doItem, Item} from "../DBParser";
 import {CSSProperties, useState} from "react";
 import ItemAdder from "./ItemAdder";
 
-const styles = require('./ItemRow.css');
+const styles = require('./EditableItemRow.css');
 
 declare const firebase: typeof import('firebase');
 

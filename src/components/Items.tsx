@@ -1,8 +1,9 @@
 import * as React from 'react';
 import {useEffect, useState} from "react";
-import ItemAdder from "./ItemAdder";
-import ItemList from "./ItemList";
+import ItemAdder from "./edit/ItemAdder";
+import ItemList from "./main/ItemList";
 import {Item, parseItems} from "./DBParser";
+import EditableItemList from "./edit/EditableItemList";
 
 declare const firebase: typeof import('firebase');
 
@@ -30,8 +31,9 @@ export default (props: Props) => {
     if (!items) return null;
 
     return <div>
-        <ItemList items={items} editMode={props.editMode}/>
+        {!props.editMode && <ItemList items={items} editMode={props.editMode}/>}
 
+        {props.editMode && <EditableItemList items={items} editMode={props.editMode}/>}
         {(props.editMode || (items.length === 0)) && <ItemAdder itemsRef={itemsRef}/>}
     </div>;
 };

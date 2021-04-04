@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useState} from "react";
-import {addItem, Item, saveItem} from "./DBParser";
+import {addItem, Item, saveItem} from "../DBParser";
 
 declare const firebase: typeof import('firebase');
 
