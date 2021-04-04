@@ -11,7 +11,6 @@ type Props = {
     item: Item;
     now: number;
     today: Date;
-    editMode: boolean;
 }
 
 const describeWhen = (today: Date, lastTime: number): string => {
@@ -107,21 +106,18 @@ export default (props: Props) => {
             {!item.lastTime && '?'}
 
             {item.lastTime && <span title={new Date(item.lastTime).toString()}>
-                        {describeWhen(props.today, item.lastTime)}
-                    </span>}
+                {describeWhen(props.today, item.lastTime)}
+            </span>}
         </td>
 
         <td>
-            {props.editMode && <>
-                {' '}
-                <button onClick={() => setIsEditing(true)} title={"Edit item"}>
-                    🖊
-                </button>
-                {' '}
-                <button onClick={() => guardedDeleteItem(item)} title={"Delete item"}>
-                    🗑
-                </button>
-            </>}
+            <button onClick={() => setIsEditing(true)} title={"Edit item"}>
+                🖊
+            </button>
+            {' '}
+            <button onClick={() => guardedDeleteItem(item)} title={"Delete item"}>
+                🗑
+            </button>
         </td>
     </tr>;
 };

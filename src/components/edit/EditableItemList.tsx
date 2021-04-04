@@ -6,7 +6,6 @@ declare const firebase: typeof import('firebase');
 
 type Props = {
     items: Item[];
-    editMode: boolean;
 }
 
 export default (props: Props) => {
@@ -43,7 +42,7 @@ export default (props: Props) => {
             </thead>
             <tbody>
                 {props.items.map((item, index) =>
-                    <EditableItemRow item={item} now={now} today={today} editMode={props.editMode} key={index}/>
+                    <EditableItemRow item={item} now={now} today={today} key={index}/>
                 )}
             </tbody>
         </table>

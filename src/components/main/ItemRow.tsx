@@ -11,7 +11,6 @@ type Props = {
     item: Item;
     now: number;
     today: Date;
-    editMode: boolean;
 }
 
 const describeWhen = (today: Date, lastTime: number): string => {
@@ -54,8 +53,6 @@ const guardedDeleteItem = (item: Item) => {
 export default (props: Props) => {
     const { item } = props;
 
-    const [isEditing, setIsEditing] = useState<boolean>(false);
-
     let cssProps: CSSProperties | undefined;
 
     if (item.lastTime) {
@@ -85,14 +82,6 @@ export default (props: Props) => {
         }
     }
 
-    if (isEditing) {
-        return <tr key={item.id}>
-            <td colSpan={3}>
-                <ItemAdder item={item} onDone={() => setIsEditing(false)}/>
-            </td>
-        </tr>;
-    }
-
     return <tr key={item.id}>
         <td>
             <button
@@ -109,19 +98,6 @@ export default (props: Props) => {
             {item.lastTime && <span title={new Date(item.lastTime).toString()}>
                         {describeWhen(props.today, item.lastTime)}
                     </span>}
-        </td>
-
-        <td>
-            {props.editMode && <>
-                {' '}
-                <button onClick={() => setIsEditing(true)} title={"Edit item"}>
-                    🖊
-                </button>
-                {' '}
-                <button onClick={() => guardedDeleteItem(item)} title={"Delete item"}>
-                    🗑
-                </button>
-            </>}
         </td>
     </tr>;
 };

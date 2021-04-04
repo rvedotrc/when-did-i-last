@@ -11,6 +11,6 @@ type P = {
 }
 
 export default (props: P) => <>
-    {props.items && <EditableItemList items={props.items} editMode={true}/>}
+    {props.items && <EditableItemList items={props.items}/>}
     {props.items && <ItemAdder itemsRef={props.itemsRef}/>}
 </>;

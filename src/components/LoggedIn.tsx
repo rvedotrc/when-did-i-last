@@ -32,7 +32,7 @@ export default (props: Props) => {
             <>
                 {!inner.items && <p>loading...</p>}
                 {inner.items && editMode && <Edit itemsRef={inner.itemsRef} items={inner.items}/>}
-                {inner.items && !editMode && <Main items={inner.items} editMode={false}/>}
+                {inner.items && !editMode && <Main items={inner.items}/>}
             </>
         }/>
     </>;
