@@ -54,24 +54,42 @@ export default (props: Props) => {
 
         if (item.lowInterval && item.highInterval) {
             if (daysAgo < item.lowInterval.count) {
-                cssProps = { backgroundColor: '#0f0' };
+                cssProps = {
+                    backgroundColor: '#0f0',
+                    color: '#000',
+                };
             } else if (daysAgo > item.highInterval.count) {
-                cssProps = { backgroundColor: '#f00' };
+                cssProps = {
+                    backgroundColor: '#f00',
+                    color: '#fff',
+                };
             } else {
                 const coefficient = (daysAgo - item.lowInterval.count) / (item.highInterval.count - item.lowInterval.count);
-                cssProps = { backgroundColor: `rgb(${Math.round(100 * coefficient)}%, ${Math.round(100 * (1 - coefficient))}%, 0%)` };
+                cssProps = {
+                    backgroundColor: `rgb(${Math.round(100 * coefficient)}%, ${Math.round(100 * (1 - coefficient))}%, 0%)`,
+                    color: coefficient < 0.5 ? '#000' : '#fff',
+                };
             }
         } else if (item.lowInterval && !item.highInterval) {
             // Do no more often than X
             if (daysAgo < item.lowInterval.count) {
-                cssProps = {backgroundColor: '#999'};
+                cssProps = {
+                    backgroundColor: '#999',
+                    color: '#000',
+                };
             }
         } else if (!item.lowInterval && item.highInterval) {
             // Do no less often than X
             if (daysAgo > item.highInterval.count) {
-                cssProps = {backgroundColor: '#f00'};
+                cssProps = {
+                    backgroundColor: '#f00',
+                    color: '#fff',
+                };
             } else {
-                cssProps = {backgroundColor: '#0f0'};
+                cssProps = {
+                    backgroundColor: '#0f0',
+                    color: '#000',
+                };
             }
         }
     }
